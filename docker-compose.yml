@@ -3,7 +3,7 @@ version: '3'
 services:
 
   mariadb:
-    image: 'mariadb:10.3'
+    image: 'mariadb:latest'
     restart: 'always'
     env_file:
       - './mariadb.env'
@@ -12,26 +12,21 @@ services:
     ports:
       - "3306:3306"
     environment:
-            MYSQL_DATABASE: myDb
+            MYSQL_DATABASE: mariadb
             MYSQL_USER: user
             MYSQL_PASSWORD: xyz1234567890
             MYSQL_ROOT_PASSWORD: xyz1234567890
 
-  phpmyadmin:
-        image: phpmyadmin/phpmyadmin
-        ports:
-            - 8080:80
-        environment:
-            MYSQL_USER: user
-            MYSQL_PASSWORD: xyz1234567890
-            MYSQL_ROOT_PASSWORD: xyz1234567890
-  
-  php:
-    image: 'caligari/wordpress-lamp:7.2'
-    build: './'
-    restart: 'always'
-    env_file:
-      - './php.env'
+   wordpress:
+    image: wordpress
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: user
+      WORDPRESS_DB_PASSWORD: xyz1234567890
+      WORDPRESS_DB_NAME: xyz1234567890
     volumes:
-      - './www:/var/www/html'
+      - wordpress:/var/www/html
 
