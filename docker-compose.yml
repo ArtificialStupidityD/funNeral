@@ -16,7 +16,6 @@ services:
             MYSQL_USER: user
             MYSQL_PASSWORD: xyz1234567890
             MYSQL_ROOT_PASSWORD: xyz1234567890
-
   wordpress:
     image: wordpress
     restart: always
@@ -30,3 +29,6 @@ services:
     volumes:
       - wordpress:/var/www/html
 
+  volumes:
+    wordpress:
+    mariadb:
